@@ -3,6 +3,8 @@
 import os
 import json
 
+ssid = "Can't stop the signal, Mal"
+password = "youcanttaketheskyfromme"
 
 restPaths = []
 fileDirectories = ["payload/manifest.json.h"]
@@ -11,8 +13,6 @@ fileDirectoryChunk = "\n"
 wifiChunk = "\n"
 restPathChunk = "\n"
 
-os.mkdir('react-server')
-os.mkdir('react-server/payload')
 
 def createIno():
     sourceFile = open("template/template.ino", "r")
@@ -42,7 +42,7 @@ def getFileType(fileName):
 
 def createWifiChunk():
     global wifiChunk
-    wifiChunk += "#ifndef STASSID\n#define STASSID \"Can't stop the signal, Mal\"\n#define STAPSK  \"youcanttaketheskyfromme\"\n#endif"
+    wifiChunk += "#ifndef STASSID\n#define STASSID \"" + ssid + "\"\n#define STAPSK  \"" + password + "\"\n#endif"
 
 
 def createAssetArray():
@@ -116,6 +116,17 @@ def createFile(source, destination, varName):
     destinationFile.close()
 
 
+
+def prompt():
+    global ssid, password
+
+    ssid = input("Wifi SSID? : ")
+    password = input("Password? : ")
+
+prompt()
+
+os.mkdir('react-server')
+os.mkdir('react-server/payload')
 
 createDirs(".")
 createAssetArray()
