@@ -2,6 +2,7 @@
 
 import os
 import json
+import shutil
 
 ssid = "Can't stop the signal, Mal"
 password = "youcanttaketheskyfromme"
@@ -71,6 +72,20 @@ def convertFileNameToC(fileName):
             varName += "_" + x
     return varName
 
+def createRootDirectory():
+    if not os.path.isdir('./react-server'):
+
+        os.mkdir('react-server')
+        os.mkdir('react-server/payload')
+    else:
+        confirm = input("'react-server' already exists and will be deleted, continue? [default: y]")
+        if confirm == "y" or confirm == "" or confirm == "yes":
+            shutil.rmtree('react-server')
+            createRootDirectory()    
+        else:
+            return
+        
+
 def createDirs(workingDirectory):
     
     sourceDirContents = os.listdir("./build/" + workingDirectory)
@@ -123,11 +138,18 @@ def prompt():
     ssid = input("Wifi SSID? : ")
     password = input("Password? : ")
 
+    confirm = input("is this correct? [default: y]")
+    print(confirm)
+    if confirm == "y" or confirm == "" or confirm == "yes":
+        
+        return
+    else:
+        prompt()
+
 prompt()
 
-os.mkdir('react-server')
-os.mkdir('react-server/payload')
 
+createRootDirectory()
 createDirs(".")
 createAssetArray()
 createFileDirectoryChunk()
