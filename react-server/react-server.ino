@@ -6,6 +6,14 @@
 #include <ESP8266mDNS.h>
 #include "FS.h"
 
+#include "payload/build/index.html.h"
+#include "payload/build/manifest.json.h"
+#include "payload/build/static/js/main.32002a2b.js.h"
+#include "payload/build/static/js/787.05b7a068.chunk.js.h"
+#include "payload/build/static/css/main.f8f8c452.css.h"
+#include "payload/build/static/css/main.f8f8c452.css.map.h"
+
+
 #ifndef STASSID
 #define STASSID "Can't stop the signal, Mal"
 #define STAPSK  "youcanttaketheskyfromme"
@@ -20,50 +28,60 @@ void sendFile(String fileName, String fileType) {
   File testFile = SPIFFS.open(fileName, "r");
   if (!testFile) {
     Serial.println("file open failed");
+    Serial.println(fileName);
   }
   server.setContentLength(CONTENT_LENGTH_UNKNOWN);
   server.send(200, fileType, "" );
     while(testFile.available()) 
     {
       //read line by line from the file
-      String line = testFile.readStringUntil('\n');
-
-      Serial.println(line);
+      String line;
+      if (fileType == "text/javascript" || fileType == "text/json") {
+        line = testFile.readStringUntil(' ');
+        if (line != "") server.sendContent(line + " ");
+      }
+      else {
+        line = testFile.readStringUntil('\n');
+        if (line != "") server.sendContent(line);
+      } 
+      
       // server.send(200, "text/html", line);
-      if (line != "") server.sendContent(line);
+      
     }
+    server.client().stop();
+    Serial.println("Done");
 }
 
 
 void handleRoot() {
 
-  sendFile("index.html", "text/html");
-  
+  // sendFile("/index.html", "text/html");
+  server.send(200, "text/html", index_html);
 
   
 }
 
+void handleJS() {
+  // sendFile("/static/js/main.js", "text/javascript");
+  server.send(200, "text/javascript", main_js);
+}
 void handleCSS() {
-
-  File testFile = SPIFFS.open("/style.css", "r");
-  if (!testFile) {
-    Serial.println("file open failed");
-  }
-  server.setContentLength(CONTENT_LENGTH_UNKNOWN);
-  server.send(200, "text/css", "" );
-    while(testFile.available()) 
-    {
-      //read line by line from the file
-      String line = testFile.readStringUntil('\n');
-
-      Serial.println(line);
-      if (line != "") server.sendContent(line);
-    }
-
-  
-
-  
+  // sendFile("/static/css/main.f8f8c452.css", "text/css");
+  server.send(200, "text/css", main_css);
 }
+void handleCSSMap() {
+  // sendFile("/static/css/main.css.map", "text/json");
+  server.send(200, "text/json", main_css_map);
+}
+void handleJSChunk() {
+  // sendFile("/static/css/main.css.map", "text/json");
+  server.send(200, "text/javascript", chunk_js);
+}
+void handleManifest() {
+  // sendFile("/manifest.json", "text/json");
+  server.send(200, "text/json", manifest);
+}
+
 void handleNotFound() {
   digitalWrite(LED_BUILTIN, 1);
   String message = "File Not Found\n\n";
@@ -126,7 +144,12 @@ void setup(void) {
   }
 
   server.on("/", handleRoot);
-  server.on("/style.css", handleCSS);
+
+  server.on("/RGB-strip-controller/static/js/main.32002a2b.js", handleJS);
+  server.on("/RGB-strip-controller/static/js/main.32002a2b.js.map", handleJSChunk);
+  server.on("/RGB-strip-controller/static/css/main.f8f8c452.css", handleCSS);
+  server.on("/RGB-strip-controller/static/css/main.f8f8c452.css.map", handleCSSMap);
+  server.on("/RGB-strip-controller/manifest.json", handleManifest);
   server.on("/on", turnOn);
   server.on("/off", turnOff);
   server.onNotFound(handleNotFound);
