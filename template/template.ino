@@ -6,18 +6,13 @@
 #include <ESP8266mDNS.h>
 #include "FS.h"
 
-#include "payload/./index.html.h"
-#include "payload/manifest.json.h"
-#include "payload/static/js/main.32002a2b.js.h"
-#include "payload/static/js/787.05b7a068.chunk.js.h"
-#include "payload/static/css/main.f8f8c452.css.h"
-// #include "payload/static/css/main.f8f8c452.css.map.h"
 
 
-#ifndef STASSID
-#define STASSID "Can't stop the signal, Mal"
-#define STAPSK  "youcanttaketheskyfromme"
-#endif
+//XXX
+
+
+
+
 
 const char *ssid = STASSID;
 const char *password = STAPSK;
@@ -143,15 +138,14 @@ void setup(void) {
     Serial.println("MDNS responder started");
   }
 
-  server.on("/", handleRoot);
+  server.on("/", server.send(200, "text/html", _index_html));
 
-  server.on("/RGB-strip-controller/static/js/main.32002a2b.js", handleJS);
-  server.on("/RGB-strip-controller/static/js/main.32002a2b.js.map", handleJSChunk);
-  server.on("/RGB-strip-controller/static/css/main.f8f8c452.css", handleCSS);
-  // server.on("/RGB-strip-controller/static/css/main.f8f8c452.css.map", handleCSSMap);
-  server.on("/RGB-strip-controller/manifest.json", handleManifest);
-  server.on("/on", turnOn);
-  server.on("/off", turnOff);
+
+  //XXX
+
+
+  // server.on("/RGB-strip-controller/static/js/main.32002a2b.js", handleJS);
+  
   server.onNotFound(handleNotFound);
 
   server.begin();
