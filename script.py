@@ -31,7 +31,7 @@ def createFileDirectoryChunk():
 def createRestPathChunk():
     for i in range(len(restPaths)):
         global restPathChunk
-        restPathChunk += 'server.on(\"' + restPaths[i] + '\", server.send(200, \"' + getFileType(varNames[i]) + '\", ' + varNames[i] + '));\n'
+        restPathChunk += '\tserver.on(\"' + restPaths[i] + '\", [](){ server.send(200, \"' + getFileType(varNames[i]) + '\", ' + varNames[i] + '); });\n'
 
 def getFileType(fileName):
 

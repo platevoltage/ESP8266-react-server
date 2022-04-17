@@ -6,7 +6,7 @@
 #include <ESP8266mDNS.h>
 #include "FS.h"
 
-#include "payload/./index.html.h"
+#include "payload/index.html.h"
 #include "payload/manifest.json.h"
 #include "payload/static/js/main.32002a2b.js.h"
 #include "payload/static/js/787.05b7a068.chunk.js.h"
@@ -143,7 +143,7 @@ void setup(void) {
     Serial.println("MDNS responder started");
   }
 
-  server.on("/", handleRoot);
+  server.on("/", [](){ server.send(200, "text/html", _index_html); });
 
   server.on("/RGB-strip-controller/static/js/main.32002a2b.js", handleJS);
   server.on("/RGB-strip-controller/static/js/main.32002a2b.js.map", handleJSChunk);
