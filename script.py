@@ -11,12 +11,12 @@ fileDirectoryChunk = "\n"
 wifiChunk = "\n"
 restPathChunk = "\n"
 
-os.mkdir('react-server-test')
-os.mkdir('react-server-test/payload')
+os.mkdir('react-server')
+os.mkdir('react-server/payload')
 
 def createIno():
     sourceFile = open("template/template.ino", "r")
-    destinationFile = open("react-server-test/react-server-test.ino", "a")
+    destinationFile = open("react-server/react-server.ino", "a")
     templateChunks = sourceFile.read().split("//XXX")
     templateChunks[0] += fileDirectoryChunk + wifiChunk
     templateChunks[1] += restPathChunk
@@ -85,10 +85,10 @@ def createDirs(workingDirectory):
         
         fileExtension = file.split(".")[-1]
         if os.path.isdir("./build/" + workingDirectory + "/" + file):
-            os.mkdir('react-server-test/payload/' + workingDirectory + "/" + file)
+            os.mkdir('react-server/payload/' + workingDirectory + "/" + file)
             createDirs(workingDirectory + "/" + file)
         elif fileExtension == "js" or fileExtension == "css" or fileExtension == "html" or file == "manifest.json":
-            createFile('build/' + workingDirectory + "/" + file, 'react-server-test/payload/' + workingDirectory + "/" + file + ".h", varName)
+            createFile('build/' + workingDirectory + "/" + file, 'react-server/payload/' + workingDirectory + "/" + file + ".h", varName)
             # print(varName)
             # varNames.append(varName)
             # fileDirectories.append("payload/" + workingDirectory + "/" + file + ".h")

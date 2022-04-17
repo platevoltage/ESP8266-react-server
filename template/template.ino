@@ -12,8 +12,6 @@
 
 
 
-
-
 const char *ssid = STASSID;
 const char *password = STAPSK;
 
@@ -138,13 +136,11 @@ void setup(void) {
     Serial.println("MDNS responder started");
   }
 
-  server.on("/", server.send(200, "text/html", _index_html));
+  server.on("/", [](){ server.send(200, "text/html", _index_html); });
 
 
   //XXX
 
-
-  // server.on("/RGB-strip-controller/static/js/main.32002a2b.js", handleJS);
   
   server.onNotFound(handleNotFound);
 
