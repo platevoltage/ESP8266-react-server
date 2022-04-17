@@ -97,9 +97,20 @@ def createFile(source, destination, varName):
 
     destinationFile = open(destination, "x")
     destinationFile = open(destination, "a")
-    sourceFile = open(source, "r")
+    # sourceFileContents = open(source, "r").read().split('\n')[0]
+    sourceFileContents = open(source, "r").read()
+    sourceFileContentsLines = sourceFileContents.split('\n')
+    tempLines = []
+
+    for line in sourceFileContentsLines:
+        if not line.startswith("/*") and not line.startswith("//"):
+            tempLines.append(line)
+
+    sourceFileContents = '\n'.join(tempLines)
+
+
     destinationFile.write('static const char ' + varName + '[] PROGMEM = R"=====(\n')
-    destinationFile.write(sourceFile.read())
+    destinationFile.write(sourceFileContents)
     destinationFile.write('\n)=====";')
 
     destinationFile.close()
@@ -113,6 +124,6 @@ createWifiChunk()
 createRestPathChunk()
 createIno()
 
-print(fileDirectories)
-print(restPaths)
-print(varNames)
+# print(fileDirectories)
+# print(restPaths)
+# print(varNames)
