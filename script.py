@@ -4,8 +4,8 @@ import os
 import json
 import shutil
 
-ssid = "Can't stop the signal, Mal"
-password = "youcanttaketheskyfromme"
+ssid = ""
+password = ""
 
 restPaths = []
 fileDirectories = ["payload/manifest.json.h"]
