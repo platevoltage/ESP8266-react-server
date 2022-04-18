@@ -1,15 +1,13 @@
-
-
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
-#include "FS.h"
 
-
+//----begin generated includes and wifi definitions
 
 //XXX
 
+//----end generated includes and wifi definitions
 
 
 const char *ssid = STASSID;
@@ -38,7 +36,6 @@ void sendFile(String fileName, String fileType) {
         if (line != "") server.sendContent(line);
       } 
       
-      // server.send(200, "text/html", line);
       
     }
     server.client().stop();
@@ -46,34 +43,9 @@ void sendFile(String fileName, String fileType) {
 }
 
 
-void handleRoot() {
 
-  // sendFile("/index.html", "text/html");
-  server.send(200, "text/html", _index_html);
 
-  
-}
 
-void handleJS() {
-  // sendFile("/static/js/main.js", "text/javascript");
-  server.send(200, "text/javascript", _main_js);
-}
-void handleCSS() {
-  // sendFile("/static/css/main.f8f8c452.css", "text/css");
-  server.send(200, "text/css", _main_css);
-}
-// void handleCSSMap() {
-
-//   server.send(200, "text/json", _main_css_map);
-// }
-void handleJSChunk() {
-  // sendFile("/static/css/main.css.map", "text/json");
-  server.send(200, "text/javascript", _chunk_js);
-}
-void handleManifest() {
-  // sendFile("/manifest.json", "text/json");
-  server.send(200, "text/json", _manifest_json);
-}
 
 void handleNotFound() {
   digitalWrite(LED_BUILTIN, 1);
@@ -95,18 +67,6 @@ void handleNotFound() {
 }
 
 
-void turnOn() {
-  server.send(200, "text/json", "{ \"led\":\"on\" }");
-  digitalWrite(LED_BUILTIN, 0);
-  Serial.println("led on");
-}
-
-void turnOff() {
-  server.send(200, "text/json", "{ \"led\":\"off\" }");
-  digitalWrite(LED_BUILTIN, 1);
-  Serial.println("led off");
-  ///fsdfdfsdfsdsdfsssssss
-}
 
 
 
@@ -138,9 +98,11 @@ void setup(void) {
 
   server.on("/", [](){ server.send(200, "text/html", _index_html); });
 
+  //-----begin generated paths
 
   //XXX
 
+  //-----end generated paths
   
   server.onNotFound(handleNotFound);
 

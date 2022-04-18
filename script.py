@@ -6,14 +6,12 @@ import shutil
 
 ssid = ""
 password = ""
-
 restPaths = []
 fileDirectories = ["payload/manifest.json.h"]
 varNames = ["_manifest_json"]
 fileDirectoryChunk = "\n"
 wifiChunk = "\n"
 restPathChunk = "\n"
-
 
 def createIno():
     sourceFile = open("template/template.ino", "r")
@@ -45,7 +43,6 @@ def createWifiChunk():
     global wifiChunk
     wifiChunk += "#ifndef STASSID\n#define STASSID \"" + ssid + "\"\n#define STAPSK  \"" + password + "\"\n#endif"
 
-
 def createAssetArray():
     sourceFile = open("./build/asset-manifest.json", "r")
     files = json.loads(sourceFile.read())["files"]
@@ -64,7 +61,6 @@ def createAssetArray():
            restPaths.append(files[key])
            varNames.append(convertFileNameToC(dirSplit[-1]))
     
-
 def convertFileNameToC(fileName):
     varName = ""
     for x in fileName.split("."):
@@ -85,7 +81,6 @@ def createRootDirectory():
         else:
             return
         
-
 def createDirs(workingDirectory):
     
     sourceDirContents = os.listdir("./build/" + workingDirectory)
@@ -96,23 +91,18 @@ def createDirs(workingDirectory):
         for x in file.split("."):
             if not any(chr.isdigit() for chr in x): 
                 varName += "_" + x
-                
-        
+                    
         fileExtension = file.split(".")[-1]
         if os.path.isdir("./build/" + workingDirectory + "/" + file):
             os.mkdir('react-server/payload/' + workingDirectory + "/" + file)
             createDirs(workingDirectory + "/" + file)
         elif fileExtension == "js" or fileExtension == "css" or fileExtension == "html" or file == "manifest.json":
             createFile('build/' + workingDirectory + "/" + file, 'react-server/payload/' + workingDirectory + "/" + file + ".h", varName)
-            # print(varName)
-            # varNames.append(varName)
-            # fileDirectories.append("payload/" + workingDirectory + "/" + file + ".h")
-
+ 
 def createFile(source, destination, varName):
 
     destinationFile = open(destination, "x")
     destinationFile = open(destination, "a")
-    # sourceFileContents = open(source, "r").read().split('\n')[0]
     sourceFileContents = open(source, "r").read()
     sourceFileContentsLines = sourceFileContents.split('\n')
     tempLines = []
@@ -122,15 +112,10 @@ def createFile(source, destination, varName):
             tempLines.append(line)
 
     sourceFileContents = '\n'.join(tempLines)
-
-
     destinationFile.write('static const char ' + varName + '[] PROGMEM = R"=====(\n')
     destinationFile.write(sourceFileContents)
     destinationFile.write('\n)=====";')
-
     destinationFile.close()
-
-
 
 def prompt():
     global ssid, password
@@ -147,8 +132,6 @@ def prompt():
         prompt()
 
 prompt()
-
-
 createRootDirectory()
 createDirs(".")
 createAssetArray()
@@ -156,7 +139,3 @@ createFileDirectoryChunk()
 createWifiChunk()
 createRestPathChunk()
 createIno()
-
-# print(fileDirectories)
-# print(restPaths)
-# print(varNames)
