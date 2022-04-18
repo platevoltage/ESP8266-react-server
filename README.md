@@ -5,8 +5,10 @@ This is a python script that can create a web server that will run on an ESP8266
 
 `git clone <this respository>`
 
+`cd <cloned directory>`
+
 copy your react build folder into this directory
 
-`cd <cloned directory>`
+Run the python script and answer the prompts
 
 `python3 script.py`
