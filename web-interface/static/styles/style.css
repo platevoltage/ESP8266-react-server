@@ -1,0 +1,18 @@
+* {
+    
+    font-family: "Inter","San Francisco","SF Pro Text",-apple-system,system-ui,sans-serif;
+}
+
+body {
+    background-color: #3578cb;
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    background-color: #ffffff55;
+    border: 1px solid #000000;
+    margin-top: 10%;
+    padding: 10%;
+    width: 50%;
+}
