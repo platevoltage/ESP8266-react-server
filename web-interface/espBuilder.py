@@ -12,6 +12,7 @@ varNames = ["_manifest_json"]
 fileDirectoryChunk = "\n"
 wifiChunk = "\n"
 restPathChunk = "\n"
+sourceDirectory = "upload/build/"
 
 def createIno():
     sourceFile = open("template/template.ino", "r")
@@ -44,7 +45,7 @@ def createWifiChunk():
     wifiChunk += "#ifndef STASSID\n#define STASSID \"" + ssid + "\"\n#define STAPSK  \"" + password + "\"\n#endif"
 
 def createAssetArray():
-    sourceFile = open("./build/asset-manifest.json", "r")
+    sourceFile = open(sourceDirectory + "asset-manifest.json", "r")
     files = json.loads(sourceFile.read())["files"]
     projectName = files["index.html"].split("/")[1]
     print(projectName)
@@ -83,7 +84,7 @@ def createRootDirectory():
         
 def createDirs(workingDirectory):
     
-    sourceDirContents = os.listdir("./build/" + workingDirectory)
+    sourceDirContents = os.listdir("./" + sourceDirectory + workingDirectory)
 
     for file in sourceDirContents:
         varName = ""
@@ -93,11 +94,11 @@ def createDirs(workingDirectory):
                 varName += "_" + x
                     
         fileExtension = file.split(".")[-1]
-        if os.path.isdir("./build/" + workingDirectory + "/" + file):
+        if os.path.isdir("./" + sourceDirectory + workingDirectory + "/" + file):
             os.mkdir('react-server/payload/' + workingDirectory + "/" + file)
             createDirs(workingDirectory + "/" + file)
         elif fileExtension == "js" or fileExtension == "css" or fileExtension == "html" or file == "manifest.json":
-            createFile('build/' + workingDirectory + "/" + file, 'react-server/payload/' + workingDirectory + "/" + file + ".h", varName)
+            createFile(sourceDirectory + workingDirectory + "/" + file, 'react-server/payload/' + workingDirectory + "/" + file + ".h", varName)
  
 def createFile(source, destination, varName):
 
