@@ -4,8 +4,7 @@ import os
 import json
 import shutil
 
-ssid = ""
-password = ""
+
 restPaths = []
 fileDirectories = ["payload/manifest.json.h"]
 varNames = ["_manifest_json"]
@@ -13,6 +12,8 @@ fileDirectoryChunk = "\n"
 wifiChunk = "\n"
 restPathChunk = "\n"
 if __name__ == "__main__":
+    ssid = ""
+    password = ""
     sourceDirectory = "build/"
     destinationDirectory = "react-server/"
 else:
