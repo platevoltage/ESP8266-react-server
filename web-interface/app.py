@@ -12,7 +12,10 @@ def index():
 
 @app.route('/', methods=['POST'])
 def upload_file():
-
+    if not os.path.isdir('./product'):
+        os.mkdir('product')
+    else:
+        shutil.rmtree('product')
     if not os.path.isdir('./upload'):
         os.mkdir('upload')
     else:

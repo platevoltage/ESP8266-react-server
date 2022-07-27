@@ -14,13 +14,15 @@ wifiChunk = "\n"
 restPathChunk = "\n"
 if __name__ == "__main__":
     sourceDirectory = "build/"
+    destinationDirectory = "react-server/"
 else:
     sourceDirectory = "upload/build/"
+    destinationDirectory = "product/react-server/"
 
 
 def createIno():
-    sourceFile = open("template/template.ino", "r")
-    destinationFile = open("react-server/react-server.ino", "a")
+    sourceFile = open("inoTemplate/template.ino", "r")
+    destinationFile = open(destinationDirectory + "react-server.ino", "a")
     templateChunks = sourceFile.read().split("//XXX")
     templateChunks[0] += fileDirectoryChunk + wifiChunk
     templateChunks[1] += restPathChunk
@@ -74,14 +76,14 @@ def convertFileNameToC(fileName):
     return varName
 
 def createRootDirectory():
-    if not os.path.isdir('./react-server'):
+    if not os.path.isdir(destinationDirectory):
 
-        os.mkdir('react-server')
-        os.mkdir('react-server/payload')
+        os.mkdir(destinationDirectory)
+        os.mkdir(destinationDirectory + 'payload')
     elif __name__ == "__main__":
         confirm = input("'react-server' already exists and will be deleted, continue? [default: y]")
         if confirm == "y" or confirm == "" or confirm == "yes":
-            shutil.rmtree('react-server')
+            shutil.rmtree(destinationDirectory)
             createRootDirectory()    
         else:
             return
@@ -99,10 +101,10 @@ def createDirs(workingDirectory):
                     
         fileExtension = file.split(".")[-1]
         if os.path.isdir("./" + sourceDirectory + workingDirectory + "/" + file):
-            os.mkdir('react-server/payload/' + workingDirectory + "/" + file)
+            os.mkdir(destinationDirectory + 'payload/' + workingDirectory + "/" + file)
             createDirs(workingDirectory + "/" + file)
         elif fileExtension == "js" or fileExtension == "css" or fileExtension == "html" or file == "manifest.json":
-            createFile(sourceDirectory + workingDirectory + "/" + file, 'react-server/payload/' + workingDirectory + "/" + file + ".h", varName)
+            createFile(sourceDirectory + workingDirectory + "/" + file, destinationDirectory + 'payload/' + workingDirectory + "/" + file + ".h", varName)
  
 def createFile(source, destination, varName):
 
