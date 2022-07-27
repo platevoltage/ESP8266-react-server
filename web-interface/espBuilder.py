@@ -12,7 +12,11 @@ varNames = ["_manifest_json"]
 fileDirectoryChunk = "\n"
 wifiChunk = "\n"
 restPathChunk = "\n"
-sourceDirectory = "upload/build/"
+if __name__ == "__main__":
+    sourceDirectory = "build/"
+else:
+    sourceDirectory = "upload/build/"
+
 
 def createIno():
     sourceFile = open("template/template.ino", "r")

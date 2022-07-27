@@ -1,7 +1,7 @@
 
 from zipfile import ZipFile
 from flask import Flask, request, redirect, url_for, render_template
-import os, espBuilder
+import os, espBuilder, shutil
 
 
 app = Flask(__name__)
@@ -12,6 +12,12 @@ def index():
 
 @app.route('/', methods=['POST'])
 def upload_file():
+
+    if not os.path.isdir('./upload'):
+        os.mkdir('upload')
+    else:
+        shutil.rmtree('upload')
+
     file = request.files['file']
     zipped_file = file.stream._file
     with ZipFile(zipped_file, 'r') as zip_ref:       
@@ -27,6 +33,8 @@ def upload_file():
     espBuilder.createWifiChunk()
     espBuilder.createRestPathChunk()
     espBuilder.createIno()
+
+
 
     return "<p>File Successfully uploaded!</p>"
 
