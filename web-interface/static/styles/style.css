@@ -1,0 +1,38 @@
+* {
+    
+    font-family: "Inter","San Francisco","SF Pro Text",-apple-system,system-ui,sans-serif;
+}
+
+body {
+    background-color: #3578cb;
+    display: flex;
+    justify-content: center;
+
+}
+header {
+    text-align: center;
+    /* background-color: #ffffff55; */
+}
+
+main {
+    /* background-color: #ffffff55; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10%;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+}
+
+section div {
+    background-color: #ffffff55;
+    border: 1px solid #000000;
+    
+    padding: 10%;
+    width: 50%;
+    max-width: 300px;
+}
