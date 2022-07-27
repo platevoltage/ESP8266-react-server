@@ -6,14 +6,30 @@
   </head>
   <body>
     <main>
+      <header><h1>React ESP8266 converter</h1></header>
+      <section>
 
-      <h1>File Upload</h1>
-      
-      <form method="POST" action="http://127.0.0.1:5000" enctype="multipart/form-data">
-        <p><input type="file" name="file"></p>
-        <p><input type="submit" value="Submit"></p>
-      </form>
+        {% if uploadSuccess %}        
+        <div> 
+        </div>
 
+
+        {% else %}
+        <div> 
+          
+
+          <p>Upload your React build directory in zip format.</p>
+          <form method="POST" action="http://127.0.0.1:5000" enctype="multipart/form-data">
+            <p><input type="file" name="file"></p>
+            <p><input type="submit" value="Submit"></p>
+          </form>
+        </div>
+        {% endif %}
+
+
+
+
+      </section>
     </main>
       
   </body>

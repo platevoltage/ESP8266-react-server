@@ -1,9 +1,9 @@
 
 from zipfile import ZipFile
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, render_template
 import os, espBuilder, shutil
 
-
+var = "test"
 app = Flask(__name__)
 
 @app.route('/')
@@ -39,5 +39,5 @@ def upload_file():
 
 
 
-    return "<p>File Successfully uploaded!</p>"
+    return render_template('index.html', uploadSuccess=True)
 
