@@ -12,23 +12,26 @@
         {% if uploadSuccess %}        
           <div> 
             <form action="http://127.0.0.1:5000/download">
-              <button type="submit">Download</button>
+              <button type="submit" class="button">Download</button>
             </form>
           </div>
         {% else %}
           <div> 
-            <p>Upload your React build directory in zip format.</p>
+            <h2>Upload your React build directory in zip format.</h2>
             <form method="POST" action="http://127.0.0.1:5000" enctype="multipart/form-data">
-              <p><input type="file" name="file"></p>
               <p>
-                <label for="ssid">SSID</label>
-                <input type="text" name="ssid">
+          
+                <input type="file" name="file" class="inputfile">
               </p>
               <p>
-                <label for="password">password</label>
-                <input type="text" name="password">
+                <label for="ssid">SSID:</label>
+                <input type="text" name="ssid" class="text-field">
               </p>
-              <p><input type="submit" value="Submit"></p>
+              <p>
+                <label for="password">Password:</label>
+                <input type="text" name="password"  class="text-field">
+              </p>
+              <p><input type="submit" value="Submit" class="button submit"></p>
             </form>
           </div>
         {% endif %}
