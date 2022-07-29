@@ -28,17 +28,24 @@ section {
     justify-content: center;
 }
 
-section div {
+.box {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
     background-color: #ffffff55;
     border: 1px solid #000000;
     
     padding: 30px;
-    width: 50%;
-    max-width: 500px;
+    width: 500px;
+    /* max-width: 500px; */
     box-shadow: 2px 2px 4px #00000055;
     border-radius: 3px;
+}
+.inner-box {
+    /* background-color: #ffffff55; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 section div p {
 
@@ -85,8 +92,8 @@ h2 {
     left: 2px;
     top: 2px;
 }
-.submit {
-    width: 80%;
+.submit, .download {
+    width: 100%;
 }
 .inputfile::-webkit-file-upload-button {
     visibility: hidden;
@@ -109,4 +116,7 @@ h2 {
     box-shadow: 0px 0px 4px #00000055;
     left: 2px;
     top: 2px;
+}
+.directory-tree {
+    width: 100%;
 }

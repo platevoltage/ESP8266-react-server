@@ -10,29 +10,38 @@
       <section>
 
         {% if uploadSuccess %}        
-          <div> 
-            <form action="http://127.0.0.1:5000/download">
-              <button type="submit" class="button">Download</button>
-            </form>
+          <div class="box">
+            <div class="inner-box">
+              <div class="directory-tree">
+                {% for line in directoryTree %}
+                  {{line}} <br>
+                {% endfor %}
+              </div>
+              <form action="http://127.0.0.1:5000/download">
+                <button type="submit" class="button download">Download</button>
+              </form>
+            </div>
           </div>
         {% else %}
-          <div> 
-            <h2>Upload your React build directory in zip format.</h2>
-            <form method="POST" action="http://127.0.0.1:5000" enctype="multipart/form-data">
-              <p>
-          
-                <input type="file" name="file" class="inputfile">
-              </p>
-              <p>
-                <label for="ssid">SSID:</label>
-                <input type="text" name="ssid" class="text-field">
-              </p>
-              <p>
-                <label for="password">Password:</label>
-                <input type="text" name="password"  class="text-field">
-              </p>
-              <p><input type="submit" value="Submit" class="button submit"></p>
-            </form>
+          <div class="box">
+            <div class="inner-box">
+              <h2>Upload your React build directory in zip format.</h2>
+              <form method="POST" action="http://127.0.0.1:5000" enctype="multipart/form-data">
+                <p>
+            
+                  <input type="file" name="file" class="inputfile">
+                </p>
+                <p>
+                  <label for="ssid">SSID:</label>
+                  <input type="text" name="ssid" class="text-field">
+                </p>
+                <p>
+                  <label for="password">Password:</label>
+                  <input type="text" name="password"  class="text-field">
+                </p>
+                <p><input type="submit" value="Submit" class="button submit"></p>
+              </form>
+            </div>
           </div>
         {% endif %}
 
